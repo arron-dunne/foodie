@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Shopping List
+{% endblock %}
+
+{% block main %}
+
+<div class="container content-container mt-5">
+    <!-- Title -->
+    <div class="row mb-4">
+        <h2><u><center>Shopping List</center></u></h2>
+    </div>
+
+    <form method="post">
+        <div class="mb-4" id="items">
+            {% if list | length == 0 %}
+            <div class="row my-3">
+                <div class="col">
+                    <input class="form-control" name="item" type="text" placeholder="Item" required>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        <input class="form-control" name="quantity" type="number" placeholder="Amount" required>
+
+                        {{ macros.select_units_field() }}
+                    </div>
+                </div>
+                <button class="btn delete-button p-0 disabled" id="delete-item-button" type="button">
+                    <img src="/static/images/delete-button.png" alt="delete-button">
+                </button>
+            </div>
+            {% else %}
+
+            {% for item in list %}
+            <div class="row my-3">
+                <div class="col">
+                    <input class="form-control" name="item" type="text" placeholder="Item" value="{{ item['item'] }}" required>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        <input class="form-control" name="quantity" type="number" placeholder="Amount" value="{{ item['quantity'] }}" required>
+
+                        {{ macros.select_units_field(selected=item['units']) }}
+                    </div>
+                </div>
+                <button class="btn delete-button p-0" id="delete-item-button" type="button">
+                    <img src="/static/images/delete-button.png" alt="delete-button">
+                </button>
+            </div>
+            {% endfor %}
+
+            {% endif %}
+        </div>
+
+        <!-- Buttons -->
+        <div class="row my-3" style="justify-content:center">
+            <div class="col-4">
+                <button class="btn btn-success" type="button" id="add-item-btn" style="width:100%">Add Item</button>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-orange" type="submit" style="width:100%">Save List</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Function is called when DOM is ready
+    $(document).ready(function () {
+
+        let items = Math.max(1, {{ list | length  }});
+
+    $.fn.update_btns = function () {
+        
+        if (items >= 2){
+            $("*#delete-item-button").removeClass("disabled");
+        }
+        else {
+            $("#delete-item-button").addClass("disabled");
+        }
+
+    };
+
+    // Update buttons on page load
+    $.fn.update_btns();
+
+    // Add item field on button click
+    $("#add-item-btn").click(function (e) {
+
+        e.preventDefault();
+
+        $("#items").append(`
+            <div class="row my-3">
+                <div class="col">
+                    <input class="form-control" name="item" type="text" placeholder="Item" required>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        <input class="form-control" name="quantity" type="number" placeholder="Amount" required>
+
+                        {{ macros.select_units_field() }}
+                    </div>
+                </div>
+                <button class="btn delete-button p-0" id="delete-item-button" type="button">
+                    <img src="/static/images/delete-button.png" alt="delete-button">
+                </button>
+            </div>
+        `);
+
+        items++;
+
+        // Update buttons 
+        $.fn.update_btns();
+
+    });
+
+    // Delete the item field on button click
+    $(document).on("click", "#delete-item-button", function (e) {
+
+        e.preventDefault();
+
+        let row_item = $(this).parent();
+
+        $(row_item).remove();
+
+        items--;
+
+        // Update buttons 
+        $.fn.update_btns();
+
+    });
+
+});
+</script>
+{% endblock %}

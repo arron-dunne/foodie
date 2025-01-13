@@ -1,0 +1,214 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Recipe
+{% endblock %}
+
+{% block main %}
+
+<div class="container recipe-form-container mt-5">
+    <!-- Title -->
+    <div class="row mb-4">
+        <h2><u><center>Edit Recipe</center></u></h2>
+    </div>
+
+    <!-- Form -->
+    <form enctype="multipart/form-data" method="post">
+
+        <!-- Title -->
+        <div class="row mb-5">
+            <div class="form-label mt-1"><h5>Title</h5></div>
+            <input class="col form-control" name="title" type="text" value="{{ recipe['title'] }}" required>
+        </div>
+
+        <!-- Description -->
+        <div class="row mb-5">
+            <div class="form-label mt-1"><h5>Description</h5></div>
+            <textarea class="col form-control" name="description">{{ recipe['description'] }}</textarea>
+        </div>
+
+        <!-- Servings -->
+        <div class="row mb-5">
+            <div class="form-label mt-1"><h5>Servings</h5></div>
+            <input class="col form-control" id="servings-form-input" name="servings" type="number" value="{{ recipe['servings'] }}">
+        </div>
+
+        <!-- Ingredients -->
+        <div class="row mb-2">
+            <div class="form-label"><h5>Ingredients</h5></div>
+            <div class="col" id="ingredients">
+                {% for ingredient in ingredients %}
+                <div class="row mb-2">
+                    <input class="col form-control" name="ingredient" type="text" placeholder="Ingredient" value="{{ ingredient['ingredient'] }}" required>
+                    <span class="col input-group">
+                        <input class="form-control" name="quantity" type="number" placeholder="Amount" value="{{ ingredient['quantity'] | norm }}" required>
+                        {{ macros.select_units_field(selected=ingredient['units']) }}
+                    </span>
+                    <button class="btn delete-button p-0" id="delete-ingredient-button" type="button">
+                        <img src="/static/images/delete-button.png" alt="delete-button">
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Add Ingredients Button -->
+        <div class="row mb-5">
+            <div class="form-label"></div>
+            <button class="col btn btn-success" id="add-ingredient-button" type="button">Add More</button>
+        </div>
+
+        <!-- Steps -->
+        <div class="row mb-2">
+            <div class="form-label"><h5>Steps</h5></div>
+            <div class="col" id="steps">
+                {% for step in steps %}
+                <div class="row mb-2">
+                    <span class="col input-group ps-0">
+                        <span class="input-group-text" id="step-num" style="align-items:flex-start">1.</span>
+                        <textarea class="form-control" name="step" required>{{ step['step'] }}</textarea>
+                    </span>
+                    <button class="btn delete-button p-0" id="delete-step-button" type="button">
+                        <img src="/static/images/delete-button.png" alt="delete-button">
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Add Steps Button -->
+        <div class="row mb-5">
+            <div class="form-label"></div>
+            <button class="col btn btn-success" id="add-step-button" type="button">Add More</button>
+        </div>
+
+       <!-- Submit button -->
+       <div class="row my-5 justify-content-center">
+        <button class="btn btn-orange" type="submit" style="width:50%">
+            <h5>Save Recipe</h5>
+        </button>
+    </div>
+
+    </form>
+</div>
+
+
+<script>
+    // Function is called when DOM is ready
+    $(document).ready(function () {
+
+        // Variables
+        let ingredients = {{ ingredients | length }};
+        let steps = {{ steps | length }};
+
+        // Updates the step field numbering
+        $.fn.update_step_numbers = function () {
+            let num = 1;
+
+            // Loop through each element with the tag step-num
+            $("*#step-num").each(function () {
+                $(this).text(`${num}.`);
+
+                num++;
+            });
+        };
+
+        // Update on refresh
+        $.fn.update_step_numbers();
+
+        // Add an ingredient field on button click
+        $("#add-ingredient-button").click(function (e) {
+
+            e.preventDefault();
+
+            // If there was only one ingredient before, remove the disabled class
+            if (ingredients == 1) {
+                $("#delete-ingredient-button").removeClass("disabled");
+            }
+
+            // Add the new ingredient html
+            $("#ingredients").append(`
+                <div class="row mb-2">
+                    <input class="col form-control" name="ingredient" type="text" placeholder="Ingredient" required>
+                    <span class="col input-group">
+                        <input class="form-control" name="quantity" type="number" placeholder="Amount" required>
+                        {{ macros.select_units_field() }}
+                    </span>
+                    <button class="btn delete-button p-0" id="delete-ingredient-button" type="button">
+                        <img src="/static/images/delete-button.png" alt="delete-button">
+                    </button>
+                </div>
+            `);
+
+            ingredients++;
+
+        });
+
+        // Delete the ingredient field on button click
+        $(document).on("click", "#delete-ingredient-button", function (e) {
+
+            e.preventDefault();
+
+            let row_item = $(this).parent();
+
+            $(row_item).remove();
+
+            ingredients--;
+
+            // If theres only 1 ingredient left, disable the delete button
+            if (ingredients == 1) {
+                $("#delete-ingredient-button").addClass("disabled");
+            }
+
+        });
+
+        // Add step field on button click
+        $("#add-step-button").click(function (e) {
+
+            e.preventDefault();
+
+            if (steps == 1) {
+                $("#delete-step-button").removeClass("disabled");
+            }
+
+            $("#steps").append(`
+                <div class="row mb-2">
+                    <span class="col input-group ps-0">
+                        <span class="input-group-text" id="step-num" style="align-items:flex-start">1.</span>
+                        <textarea class="form-control" name="step" required></textarea>
+                    </span>
+                    <button class="btn delete-button p-0" id="delete-step-button" type="button">
+                        <img src="/static/images/delete-button.png" alt="delete-button">
+                    </button>
+                </div>
+            `);
+
+            steps++;
+
+            $.fn.update_step_numbers();
+
+        });
+
+        // Remove step field on button click
+        $(document).on("click", "#delete-step-button", function (e) {
+
+            e.preventDefault();
+
+            let row_item = $(this).parent();
+
+            $(row_item).remove();
+
+            steps--;
+
+            if (steps == 1) {
+                $("#delete-step-button").addClass("disabled");
+            }
+
+            $.fn.update_step_numbers();
+
+        });
+
+    });
+</script>
+
+{% endblock %}

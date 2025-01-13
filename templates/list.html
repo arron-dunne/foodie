@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Shopping List
+{% endblock %}
+
+{% block main %}
+<div class="container content-container mt-5">
+    <!-- Title -->
+    <div class="row mb-4" style="justify-content:center">
+        <h2><u>
+                <center>Shopping List</center>
+            </u></h2>
+    </div>
+    <!-- Items -->
+    <div id="items">
+        {% if list | length == 0 %}
+        <div class="row my-3"><i>Shopping List is empty</i></div>
+        {% else %}
+        <ul>
+            {% for item in list %}
+            <li>{{ item["quantity"] | norm }}{{ item["units"] }} {{ item["item"] }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <!-- Buttons -->
+    <div class="row" style="justify-content:center">
+        <div class="col-4">
+            <a href="/editlist/{{ session['user_id'] }}">
+                <button class="btn btn-orange" type="button" style="width: 100%">Edit List</button>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="/clearlist/{{ session['user_id'] }}">
+                <button class="btn btn-secondary" type="button" style="width: 100%">Clear List</button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

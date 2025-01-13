@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block main %}
+<div class="container-lg d-flex justify-content-center mt-5">
+    <!-- Recipes -->
+    <a href="/recipes/{{ session['user_id'] }}" class="homepage-card-link">
+        <img class="homepage-card" src="/static/images/my-recipes-card.png" alt="my-recipes-card">
+    </a>
+    <!-- Add Recipe -->
+    <a href="/addrecipe" class="homepage-card-link">
+        <img class="homepage-card" src="/static/images/add-recipe-card.png" alt="add-recipe-card">
+    </a>
+    <!-- Shopping List -->
+    <a href="/list/{{ session['user_id'] }}" class="homepage-card-link">
+        <img class="homepage-card" src="/static/images/shopping-list-card.png" alt="shopping-list-card">
+    </a>
+</div>
+{% endblock %}

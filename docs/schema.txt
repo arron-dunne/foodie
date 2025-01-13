@@ -1,0 +1,35 @@
+users  
+    id
+    username
+    password
+
+recipes
+    id
+    user_id
+    title
+    description
+    servings
+
+ingredients
+    id
+    recipe_id
+    ingredient
+    quantity
+    units
+
+steps
+    id
+    recipe_id
+    step
+
+pictures
+    id
+    recipe_id
+    filename
+
+list
+    id
+    user_id
+    item
+    quantity
+    units

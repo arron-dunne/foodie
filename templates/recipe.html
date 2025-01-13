@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Recipe
+{% endblock %}
+
+{% block main %}
+<div class="container content-container w-100 mt-5">
+    <div class="d-flex mb-4">
+        <!-- Title -->
+        <h2 class="flex-grow-1"><u>{{ recipe["title"] }}</u></h2>
+        <!-- Edit Button -->
+        <a class="text-reset" href="/editrecipe/{{ session['user_id'] }}/{{ recipe['id'] }}">
+            <button class="btn btn-orange" type="submit">
+                Edit
+            </button>
+        </a>
+    </div>
+    
+    <!-- Description -->
+    <div class="word-wrap">{{ recipe["description"] }}</div>
+    
+    <!-- Servings -->
+    {% if recipe['servings'] is integer %}   
+        <div class="mt-3"><h5>Serves {{ recipe['servings'] }}</h5></div>
+    {% endif %}
+    
+    <hr>
+    <!-- Ingredients -->
+    <h3>Ingredients</h3>
+
+    <div class="row">
+        {% set num_items = ingredients | length %}
+        <div class="col-6">
+            <ul>
+                {% for ingredient in ingredients %}
+                {% if loop.index0 < num_items / 2 %} <li class="li-steps word-wrap">{{ ingredient["quantity"] | norm }}{{
+                    ingredient["units"] }} {{
+                    ingredient["ingredient"] }}</li>
+                    {% endif %}
+                    {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6">
+            <ul>
+                {% for ingredient in ingredients %}
+                {% if loop.index0 >= num_items / 2 %}
+                <li class="li-steps word-wrap">{{ ingredient["quantity"] | norm }}{{ ingredient["units"] }} {{
+                    ingredient["ingredient"] }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!-- Add Ingredients Button -->
+    <div class="row">
+        <div class="col-6">
+            <button class="btn btn-success">
+                <a class="text-reset" href="/addingredients/{{ recipe['id'] }}">Add Ingredients to Shopping List</a>
+            </button>
+        </div>
+    </div>
+    <hr>
+    <!-- Steps -->
+    <h3>Steps</h3>
+    <div class="row">
+        <div class="col-12">
+            <ol>
+                {% for step in steps %}
+                <li class="li-steps">{{ step["step"] }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+    <hr>
+    <!-- Picture -->
+    {% if picture | length != 0 %}
+    <div class="row justify-content-center">
+        <div class="col-4 p-2">
+            <img class="img-fluid" src="/static/uploads/{{ picture[0]['filename'] }}" alt="image">
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

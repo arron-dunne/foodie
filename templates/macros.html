@@ -1,0 +1,106 @@
+{% macro select_units_field(selected='') %}
+    <select class="input-group-text" name="units" id="select-units-field">
+        {% if selected == '' %}
+            <option value="" selected>no units</option>
+        {% else %}
+            <option value="">no units</option>
+        {% endif %}
+
+        {% if selected == 'g' %}
+            <option value="g" selected>gramme (g)</option>
+        {% else %}
+            <option value="g">gramme (g)</option>
+        {% endif %}
+
+        {% if selected == 'kg' %}
+            <option value="kg" selected>kilogram (kg)</option>
+        {% else %}
+            <option value="kg">kilogram (kg)</option>
+        {% endif %}
+
+        {% if selected == 'lb' %}
+            <option value="lb" selected>pound (lb)</option>    
+        {% else %}
+            <option value="lb">pound (lb)</option>
+        {% endif %}
+
+        {% if selected == 'oz' %}
+            <option value="oz" selected>ounce (oz)</option>    
+        {% else %}
+            <option value="oz">ounce (oz)</option>
+        {% endif %}
+
+        {% if selected == 'ml' %}
+            <option value="ml" selected>millilitre (ml)</option>
+        {% else %}
+            <option value="ml">millilitre (ml)</option>
+        {% endif %}
+
+        {% if selected == 'L' %}
+            <option value="L" selected>litre (L)</option>
+        {% else %}
+            <option value="L">litre (L)</option>
+        {% endif %}
+
+        {% if selected == 'tsp.' %}
+            <option value="tsp." selected>teaspoon (tsp.)</option>
+        {% else %}
+            <option value="tsp.">teaspoon (tsp.)</option>
+        {% endif %}
+
+        {% if selected == 'tbsp.' %}
+            <option value="tbsp." selected>tablespoon (tbsp.)</option>
+        {% else %}
+            <option value="tbsp.">tablespoon (tbsp.)</option>
+        {% endif %}
+
+        {% if selecte == 'fl oz' %}
+            <option value="fl oz" selected>fluid ounce (fl oz)</option>
+        {% else %}
+            <option value="fl oz">fluid ounce (fl oz)</option>
+        {% endif %}
+
+        {% if selected == 'cup' %}
+            <option value="cup" selected>cup</option>
+        {% else %}
+            <option value="cup">cup</option>
+        {% endif %}
+
+        {% if selected == 'pint' %}
+            <option value="pint" selected>pint</option>
+        {% else %}
+            <option value="pint">pint</option>
+        {% endif %}
+
+        {% if selected == 'gal' %}
+            <option value="gal" selected>gallon (gal)</option>
+        {% else %}
+            <option value="gal">gallon (gal)</option>
+        {% endif %}
+
+        {% if selected == 'mm' %}
+            <option value="mm" selected>millimeter (mm)</option>
+        {% else %}
+            <option value="mm">millimeter (mm)</option>
+        {% endif %}
+
+        {% if selected == 'cm' %}
+            <option value="cm" selected>centimeter (cm)</option>
+        {% else %}
+            <option value="cm">centimeter (cm)</option>
+        {% endif %}
+
+        {% if selected == 'm' %}
+            <option value="m" selected>meter (m)</option>
+        {% else %}
+            <option value="m">meter (m)</option>
+        {% endif %}
+
+        {% if selected == 'in' %}
+            <option value="in" selected>inch (in)</option>
+        {% else %}
+            <option value="in">inch (in)</option>
+        {% endif %}
+
+    </select>
+{% endmacro %}

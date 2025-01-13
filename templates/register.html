@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block main %}
+<div class="container login-container mt-5">
+    <div class="row mb-4">
+        <h2><u><center>Register</center></u></h2>
+    </div>
+
+    <form method="post">
+        <!-- Username -->
+        <div class="row mt-4" style="text-align: end;">
+            <div class="col-5">
+                <label class="form-label mt-2">
+                    <h5>Username</h5>
+                </label>
+            </div>
+            <div class="col-7">
+                {% if error == "username_exists" %}
+                    <input class="form-control is-invalid" name="username" type="text" required>
+                    <div class="invalid-feedback">Username already exists</div>
+                {% elif error == "password_match" %}
+                    <input class="form-control is-valid" name="username" type="text" value="{{ username }}" required>
+                    <div class="valid-feedback">Username available</div>
+                {% else %}
+                    <input class="form-control" name="username" type="text" required>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="row mt-3">
+            <div class="col-5" style="text-align: end;">
+                <label class="form-label mt-2">
+                    <h5>Password</h5>
+                </label>
+            </div>
+            <div class="col-7">
+                {% if error == "password_match" %}
+                    <input class="form-control is-invalid" name="password" type="password" required>
+                    <div class="invalid-feedback">Passwords did not match</div>
+                {% else %}
+                    <input class="form-control" name="password" type="password" required>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="row mt-3">
+            <div class="col-5" style="text-align: end;">
+                <label class="form-label mt-2">
+                    <h5>Repeat Password</h5>
+                </label>
+            </div>
+            <div class="col-7">
+                <input class="form-control" name="confirm" type="password" required>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="row mt-4" style="justify-content:center">
+            <div class="class col-6">
+                <button class="btn btn-orange" type="submit" style="width: 100%;">Register</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+A. User Access
+    1. Not logged in, tries to access home route
+        -> Redirected to login page
+    2. Clicks register button
+        -> Served register page
+    3. User submits form with nothing entered
+        -> User promted to complete form
+    4. User enters username which already exists
+        -> User promted to enter another username
+    5. User enters unique username but passwords dont match
+        -> User promted to try passwords again
+    6. User enters unique username and matching passwords
+        -> User logged in, and redirected to home
+    7. User clicks logout
+        -> User logged out and taken back to login page
+
+B. Create Recipe
+    1. User logged on, on homepage, clicks add recipe button
+        -> Served add recipe page
+    2. Submits a form with nothing entered
+        -> Promted to enter Title
+    3. User enters a title, description, ingredient, step and picture and submits form
+        -> User redirected to recipe page for new recipe
+    4. User goes to recipes page
+        -> Served recipes page page with new recipe
+    5. User clicks recipe card
+        -> Served recipe page
+    6. User clicks edit button
+        -> Served edit form with corrent fields already filled in
+    7. User edits form and clicks submit
+        -> User returned to to recipe page with changes
+
+C. Shopping List
+    1. User logged in on home screen, clicks on shopping list
+        -> Served list
+    2. User clicks edit
+        -> Served edit list with any items shown
+    3. User adds a new item and clicks save
+        -> Redirected to list with new item shown
+    4. User clicks clear list
+        -> Served list with no contents
+    5. User goes to a recipe and clicks add ingredients to list button
+        -> User remains on recipe page
+    6. User goes to shopping list page
+        -> Ingredients from recipe are on list
