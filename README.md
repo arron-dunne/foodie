@@ -1,5 +1,5 @@
 # Foodie
-The online recipe manager to save and store all your recipes!
+*The online recipe manager to save and store all your recipes!*
 - [**Video Demo**](https://youtube.com/watch?v=yu_pxmD6JPU)
 
 - [**Live Deployment**](https://myfoodie.pythonanywhere.com)
